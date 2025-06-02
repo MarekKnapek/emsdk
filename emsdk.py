@@ -814,7 +814,7 @@ def git_recent_commits(repo_path, n=20):
 
 def git_clone(url, dstpath, branch):
   debug_print('git_clone(url=' + url + ', dstpath=' + dstpath + ')')
-  if os.path.isdir(os.path.join(dstpath, '.git')):
+  if os.path.isdir(os.path.join(dstpath, '.git')) or os.path.isfile(os.path.join(dstpath, '.git')):
     debug_print("Repository '" + url + "' already cloned to directory '" + dstpath + "', skipping.")
     return True
   mkdir_p(dstpath)
@@ -861,7 +861,7 @@ def git_clone_checkout_and_pull(url, dstpath, branch):
   debug_print('git_clone_checkout_and_pull(url=' + url + ', dstpath=' + dstpath + ', branch=' + branch + ')')
 
   # If the repository has already been cloned before, issue a pull operation. Otherwise do a new clone.
-  if os.path.isdir(os.path.join(dstpath, '.git')):
+  if os.path.isdir(os.path.join(dstpath, '.git')) or os.path.isfile(os.path.join(dstpath, '.git')):
     return git_pull(dstpath, branch)
   else:
     return git_clone(url, dstpath, branch)
